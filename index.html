@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Quadro Interativo</title>
+
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+    background: #000;
+  }
+
+  #container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-image: url("quadro.jpg"); /* A tua imagem */
+    background-size: cover;
+    background-position: center;
+  }
+
+  #canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  /* Estilo giz melhorado */
+  #tools {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.25);
+    padding: 16px;
+    border-radius: 12px;
+    backdrop-filter: blur(3px);
+  }
+
+  button, input[type=color] {
+    margin: 6px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: 3px solid rgba(255,255,255,0.85);
+    background: rgba(0, 50, 0, 0.65); /* verde quadro */
+    color: white;
+    font-family: "Comic Sans MS", "Chalkboard", sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.15s;
+    box-shadow: 0 0 4px rgba(255,255,255,0.4);
+  }
+
+  button:hover, input[type=color]:hover {
+    background: rgba(0, 70, 0, 0.9);
+    transform: scale(1.07);
+    box-shadow: 0 0 8px rgba(255,255,255,0.7);
+  }
+
+  input[type=color] {
+    width: 55px;
+    height: 45px;
+    padding: 0;
+    border-radius: 6px;
+  }
+</style>
+</head>
+
+<body>
+
+<div id="container">
+  <canvas id="canvas"></canvas>
+</div>
+
+<div id="tools">
+  <button onclick="setColor('white')">Giz Branco</button>
+  <input type="color" id="colorPicker" onchange="setColor(this.value)">
+  <button onclick="setEraser()">Borracha</button>
+  <button onclick="clearCanvas()">Limpar</button>
+  <button onclick="saveDrawing()">Guardar</button>
+</div>
+
+<script>
+  const canvas = document.getElementById("canvas");
+  const ctx = canvas.getContext("2d");
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let drawing = false;
+  let brushColor = "white";
+  let brushSize = 5;
+
+  function setColor(color) {
+    brushColor = color;
+    brushSize = 5;
+  }
+
+  function setEraser() {
+    brushColor = "rgba(0,0,0,0)";
+    brushSize = 30;
+  }
+
+  canvas.addEventListener("mousedown", () => drawing = true);
+  canvas.addEventListener("mouseup", () => drawing = false);
+  canvas.addEventListener("mousemove", draw);
+
+  function draw(e) {
+    if (!drawing) return;
+    ctx.beginPath();
+    ctx.arc(e.clientX, e.clientY, brushSize, 0, Math.PI * 2);
+    ctx.fillStyle = brushColor;
+    ctx.fill();
+  }
+
+  function clearCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  function saveDrawing() {
+    const link = document.createElement("a");
+    link.download = "quadro-desenho.png";
+    link.href = canvas.toDataURL();
+    link.click();
+  }
+</script>
+
+</body>
+</html>
