@@ -11,64 +11,62 @@
 </head>
 
 <body>
-    <header>
-        <h1>Ganhar RC</h1>
-        <nav>
-            <ul>
-                <li><a href="carteira.html">Carteira</a></li>
-                <li><a href="historico.html">Historico</a></li>
-                <li><a href="ganhar2.html">Ganhar</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <main>
-        <section class="info-section">
-            <h2>Missões rápidas</h2>
-            <p>Clica numa ação para ganhar RaizCoin.</p>
+<header>
+    <h1>Ganhar RC</h1>
+    <nav>
+        <ul>
+            <li><a href="carteira.html">Carteira</a></li>
+            <li><a href="historico.html">Histórico</a></li>
+            <li><a href="ganhar2.html">Ganhar</a></li>
+        </ul>
+    </nav>
+</header>
 
-            <button class="action-btn" onclick="ganhar(5)">Explorar um espaço (+5 RC)</button>
-            <button class="action-btn" onclick="ganhar(10)">Completar um ritual (+10 RC)</button>
-            <button class="action-btn" onclick="ganhar(20)">Descoberta especial (+20 RC)</button>
+<main>
+    <section class="info-section">
+        <h2>Missões rápidas</h2>
+        <p>Clica numa ação para ganhar RaizCoin.</p>
 
-            <p id="feedback" style="margin-top:20px; font-weight:bold;"></p>
-        </section>
-    </main>
+        <button class="action-btn" onclick="ganhar(5)">Explorar um espaço (+5 RC)</button>
+        <button class="action-btn" onclick="ganhar(10)">Completar um ritual (+10 RC)</button>
+        <button class="action-btn" onclick="ganhar(20)">Descoberta especial (+20 RC)</button>
 
-    <footer>
-        <p>&copy; 2024 Mundo Raiz</p>
-    </footer>
+        <p id="feedback" style="margin-top:20px; font-weight:bold;"></p>
+    </section>
+</main>
 
-    <!-- Script Ganhar RC -->
-    <script type="module">
-        import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+<footer>
+    <p>&copy; 2024 Mundo Raiz</p>
+</footer>
 
-        async function ganhar(valor) {
-            const db = window.db; // vem do firebase.js
+<script type="module">
+    import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
-            if (!db) {
-                document.getElementById("feedback").innerText =
-                    "Erro: Firebase não carregou.";
-                return;
-            }
+    async function ganhar(valor) {
+        const db = window.db;
 
-            const ref = doc(db, "users", "mario");
-            const snap = await getDoc(ref);
+        const ref = doc(db, "users", "mario");
+        const snap = await getDoc(ref);
 
-            if (snap.exists()) {
-                const saldoAtual = snap.data().saldo;
-                const novoSaldo = saldoAtual + valor;
+        if (snap.exists()) {
+            const saldoAtual = snap.data().saldo;
+            const novoSaldo = saldoAtual + valor;
 
-                await updateDoc(ref, { saldo: novoSaldo });
+            await updateDoc(ref, { saldo: novoSaldo });
 
-                document.getElementById("feedback").innerText =
-                    "Ganhaste +" + valor + " RC! Novo saldo: " + novoSaldo + " RC";
-            } else {
-                document.getElementById("feedback").innerText =
-                    "Erro: utilizador não encontrado.";
-            }
+            document.getElementById("feedback").innerText =
+                "Ganhaste +" + valor + " RC! Novo saldo: " + novoSaldo + " RC";
+        } else {
+            document.getElementById("feedback").innerText =
+                "Erro: utilizador não encontrado.";
         }
-    </script>
+    }
+</script>
+
+</body>
+</html>
+
 
 </body>
 </html>
