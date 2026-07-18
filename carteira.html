@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carteira — RaizCoin</title>
     <link rel="stylesheet" href="styles.css">
-
-    <!-- Firebase -->
     <script src="firebase.js"></script>
 </head>
 
@@ -18,7 +16,7 @@
         <ul>
             <li><a href="carteira.html">Carteira</a></li>
             <li><a href="historico.html">Histórico</a></li>
-            <li><a href="ganhar2.html">Ganhar</a></li>
+            <li><a href="ganhardois.html">Ganhar</a></li>
         </ul>
     </nav>
 </header>
@@ -39,13 +37,11 @@
 
     async function carregarSaldo() {
         const db = window.db;
-
         const ref = doc(db, "users", "mario");
         const snap = await getDoc(ref);
 
         if (snap.exists()) {
-            const saldo = snap.data().saldo;
-            document.getElementById("saldo").innerText = saldo + " RC";
+            document.getElementById("saldo").innerText = snap.data().saldo + " RC";
         } else {
             document.getElementById("saldo").innerText = "Erro ao carregar saldo.";
         }
