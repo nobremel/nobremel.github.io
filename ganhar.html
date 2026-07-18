@@ -43,9 +43,15 @@
     <script type="module">
         import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
-        const db = window.db;
-
         async function ganhar(valor) {
+            const db = window.db; // vem do firebase.js
+
+            if (!db) {
+                document.getElementById("feedback").innerText =
+                    "Erro: Firebase não carregou.";
+                return;
+            }
+
             const ref = doc(db, "users", "mario");
             const snap = await getDoc(ref);
 
@@ -57,7 +63,6 @@
 
                 document.getElementById("feedback").innerText =
                     "Ganhaste +" + valor + " RC! Novo saldo: " + novoSaldo + " RC";
-
             } else {
                 document.getElementById("feedback").innerText =
                     "Erro: utilizador não encontrado.";
@@ -67,3 +72,4 @@
 
 </body>
 </html>
+
