@@ -6,62 +6,54 @@
     <title>RaizCoin</title>
     <link rel="stylesheet" href="styles.css">
 
-    <!-- Carregar Firebase -->
+    <!-- Firebase -->
     <script src="firebase.js"></script>
 </head>
 
 <body>
-    <header>
-        <h1>RaizCoin</h1>
-      <nav>
-    <ul>
-        <li><a href="carteira.html">Carteira</a></li>
-        <li><a href="historico.html">Histórico</a></li>
-        <li><a href="ganhar.html">Ganhar</a></li>
-    </ul>
-</nav>
 
-    </header>
+<header>
+    <h1>RaizCoin</h1>
+    <nav>
+        <ul>
+            <li><a href="carteira.html">Carteira</a></li>
+            <li><a href="historico.html">Histórico</a></li>
+            <li><a href="ganhar2.html">Ganhar</a></li>
+        </ul>
+    </nav>
+</header>
 
-    <main>
-        <section class="saldo-section">
-            <h2>Saldo atual: <span id="saldo">...</span></h2>
-            <img src="raizcoin.svg" alt="RaizCoin" class="coin-image">
-        </section>
+<main>
+    <section class="info-section">
+        <h2>Bem‑vindo ao RaizCoin</h2>
+        <p>Escolhe uma das opções abaixo para consultar o saldo, ver o histórico ou ganhar RC.</p>
 
-        <section class="info-section">
-            <h3>O que é RaizCoin?</h3>
-            <p>RaizCoin é a moeda oficial do Mundo Raiz. Ganha completando missões, explorando espaços e participando em atividades.</p>
-        </section>
-    </main>
+        <div class="card-grid">
+            <a class="card" href="carteira.html">
+                <h3>Carteira</h3>
+                <p>Consulta o teu saldo atual.</p>
+            </a>
 
-    <footer>
-        <p>&copy; 2024 Mundo Raiz</p>
-    </footer>
+            <a class="card" href="ganhar2.html">
+                <h3>Ganhar RC</h3>
+                <p>Completa ações e aumenta o teu saldo.</p>
+            </a>
 
-    <!-- Script para ler saldo real do Firebase -->
-    <script type="module">
-        import { doc, getDoc } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+            <a class="card" href="historico.html">
+                <h3>Histórico</h3>
+                <p>Vê todas as ações realizadas.</p>
+            </a>
+        </div>
+    </section>
+</main>
 
-        async function carregarSaldo() {
-            const db = window.db; // vem do firebase.js
-
-            const ref = doc(db, "users", "mario");
-            const snap = await getDoc(ref);
-
-            if (snap.exists()) {
-                const saldo = snap.data().saldo;
-                document.getElementById("saldo").innerText = saldo + " RC";
-            } else {
-                document.getElementById("saldo").innerText = "Erro";
-            }
-        }
-
-        carregarSaldo();
-    </script>
+<footer>
+    <p>&copy; 2024 Mundo Raiz</p>
+</footer>
 
 </body>
 </html>
+
 
 
 
