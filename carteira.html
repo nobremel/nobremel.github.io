@@ -1,60 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <title>Carteira Mundo Raiz</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carteira — RaizCoin</title>
+    <link rel="stylesheet" href="styles.css">
 
-  <style>
-    .container {
-      max-width: 700px;
-      margin: 50px auto;
-      background-color: #2c2c2c;
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 0 25px rgba(0,0,0,0.5);
-      color: white;
-      font-family: Arial;
-      text-align: center;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 14px 28px;
-      background-color: #444;
-      color: white;
-      text-decoration: none;
-      border-radius: 10px;
-      font-size: 20px;
-      margin: 10px;
-      transition: 0.3s;
-    }
-
-    .btn:hover {
-      background-color: #555;
-    }
-  </style>
+    <!-- Firebase -->
+    <script src="firebase.js"></script>
 </head>
 
-<body style="background-color: #1e1e1e;">
+<body>
 
-  <div class="container">
+<header>
+    <h1>Carteira</h1>
+    <nav>
+        <ul>
+            <li><a href="carteira.html">Carteira</a></li>
+            <li><a href="historico.html">Histórico</a></li>
+            <li><a href="ganhar2.html">Ganhar</a></li>
+        </ul>
+    </nav>
+</header>
 
-    <h1 style="font-size: 36px; margin-bottom: 20px;">
-      <img src="raizcoin.svg" alt="RaizCoin" style="width: 80px; vertical-align: middle;">
-      Carteira Mundo Raiz
-    </h1>
+<main>
+    <section class="info-section">
+        <h2>Saldo Atual</h2>
+        <p id="saldo">A carregar saldo...</p>
+    </section>
+</main>
 
-    <p style="font-size: 22px; opacity: 0.9;">
-      Esta é a tua carteira digital do Mundo Raiz.
-    </p>
+<footer>
+    <p>&copy; 2024 Mundo Raiz</p>
+</footer>
 
-    <div style="margin-top: 40px;">
-      <a href="raizcoin.html" class="btn">💰 Ver Saldo</a>
-      <a href="historico.html" class="btn">📜 Histórico</a>
-      <a href="ganhar.html" class="btn">🌱 Ganhar RC</a>
-    </div>
+<script type="module">
+    import { doc, getDoc } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
-  </div>
+    async function carregarSaldo() {
+        const db = window.db;
+
+        const ref = doc(db, "users", "mario");
+        const snap = await getDoc(ref);
+
+        if (snap.exists()) {
+            const saldo = snap.data().saldo;
+            document.getElementById("saldo").innerText = saldo + " RC";
+        } else {
+            document.getElementById("saldo").innerText = "Erro ao carregar saldo.";
+        }
+    }
+
+    carregarSaldo();
+</script>
 
 </body>
 </html>
+
