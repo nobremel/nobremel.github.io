@@ -1,70 +1,69 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <title>Ganhar RaizCoin</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ganhar RC</title>
+    <link rel="stylesheet" href="styles.css">
 
-  <style>
-    .container {
-      max-width: 700px;
-      margin: 50px auto;
-      background-color: #2c2c2c;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.4);
-      color: white;
-      font-family: Arial;
-    }
-
-    .mission {
-      background-color: #3a3a3a;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 15px;
-    }
-
-    .mission-title {
-      font-size: 22px;
-      margin-bottom: 5px;
-    }
-
-    .mission-reward {
-      color: #ffea00;
-      font-size: 18px;
-      margin-top: 5px;
-    }
-  </style>
+    <!-- Firebase -->
+    <script src="firebase.js"></script>
 </head>
 
-<body style="background-color: #1e1e1e;">
+<body>
+    <header>
+        <h1>Ganhar RC</h1>
+        <nav>
+            <ul>
+                <li><a href="carteira.html">Carteira</a></li>
+                <li><a href="historico.html">Historico</a></li>
+                <li><a href="ganhar.html">Ganhar</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <div class="container">
-    <h1 style="text-align: center; font-size: 32px; margin-bottom: 20px;">
-      🌱 Ganhar RaizCoin
-    </h1>
+    <main>
+        <section class="info-section">
+            <h2>Missões rápidas</h2>
+            <p>Clica numa ação para ganhar RaizCoin.</p>
 
-    <!-- Missões fictícias -->
-    <div class="mission">
-      <div class="mission-title">Regar as plantas</div>
-      <div class="mission-reward">+3 RC</div>
-    </div>
+            <button class="action-btn" onclick="ganhar(5)">Explorar um espaço (+5 RC)</button>
+            <button class="action-btn" onclick="ganhar(10)">Completar um ritual (+10 RC)</button>
+            <button class="action-btn" onclick="ganhar(20)">Descoberta especial (+20 RC)</button>
 
-    <div class="mission">
-      <div class="mission-title">Ajudar um colega</div>
-      <div class="mission-reward">+5 RC</div>
-    </div>
+            <p id="feedback" style="margin-top:20px; font-weight:bold;"></p>
+        </section>
+    </main>
 
-    <div class="mission">
-      <div class="mission-title">Completar um desafio criativo</div>
-      <div class="mission-reward">+8 RC</div>
-    </div>
+    <footer>
+        <p>&copy; 2024 Mundo Raiz</p>
+    </footer>
 
-    <div class="mission">
-      <div class="mission-title">Resolver um puzzle Mundo Raiz</div>
-      <div class="mission-reward">+4 RC</div>
-    </div>
+    <!-- Script Ganhar RC -->
+    <script type="module">
+        import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
-  </div>
+        const db = window.db;
+
+        async function ganhar(valor) {
+            const ref = doc(db, "users", "mario");
+            const snap = await getDoc(ref);
+
+            if (snap.exists()) {
+                const saldoAtual = snap.data().saldo;
+                const novoSaldo = saldoAtual + valor;
+
+                await updateDoc(ref, { saldo: novoSaldo });
+
+                document.getElementById("feedback").innerText =
+                    "Ganhaste +" + valor + " RC! Novo saldo: " + novoSaldo + " RC";
+
+            } else {
+                document.getElementById("feedback").innerText =
+                    "Erro: utilizador não encontrado.";
+            }
+        }
+    </script>
 
 </body>
 </html>
