@@ -1,86 +1,67 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <title>RaizCoin</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RaizCoin</title>
+    <link rel="stylesheet" href="styles.css">
 
-  <style>
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-  </style>
+    <!-- Carregar Firebase -->
+    <script src="firebase.js"></script>
 </head>
 
-<body style="background-color: #1e1e1e; color: white; font-family: Arial;">
+<body>
+    <header>
+        <h1>RaizCoin</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="carteira.html">Carteira</a></li>
+                <li><a href="historico.html">Histórico</a></li>
+                <li><a href="ganhar.html">Ganhar</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <!-- Título com ícone -->
-  <h1 style="text-align: center; margin-top: 40px; font-size: 36px;">
-    <img src="raizcoin.svg" alt="RaizCoin" style="width: 80px; vertical-align: middle;">
-    RaizCoin (RC)
-  </h1>
+    <main>
+        <section class="saldo-section">
+            <h2>Saldo atual: <span id="saldo">...</span></h2>
+            <img src="raizcoin.svg" alt="RaizCoin" class="coin-image">
+        </section>
 
-  <!-- Painel central -->
-  <div style="
-    max-width: 400px;
-    margin: 60px auto;
-    padding: 30px;
-    background-color: #2c2c2c;
-    border-radius: 16px;
-    text-align: center;
-    box-shadow: 0 0 25px rgba(0,0,0,0.5);
-  ">
-    
-    <!-- Saldo com brilho -->
-    <p style="font-size: 26px; margin-top: 10px;">
-      Saldo atual:
-      <strong style="
-        font-size: 32px;
-        color: #ffea00;
-        text-shadow: 0 0 10px #ffea00;
-        animation: pulse 2s infinite;
-      ">
-        120 RC
-      </strong>
-    </p>
+        <section class="info-section">
+            <h3>O que é RaizCoin?</h3>
+            <p>RaizCoin é a moeda oficial do Mundo Raiz. Ganha completando missões, explorando espaços e participando em atividades.</p>
+        </section>
+    </main>
 
-  </div>
+    <footer>
+        <p>&copy; 2024 Mundo Raiz</p>
+    </footer>
 
-  <!-- Botões -->
-  <div style="text-align: center; margin-top: 30px;">
+    <!-- Script para ler saldo real do Firebase -->
+    <script type="module">
+        import { doc, getDoc } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
-    <a href="historico.html" style="
-      display: inline-block;
-      padding: 12px 24px;
-      background-color: #444;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 18px;
-      margin-right: 10px;
-      transition: 0.3s;
-    ">
-      📜 Histórico
-    </a>
+        async function carregarSaldo() {
+            const db = window.db; // vem do firebase.js
 
-    <a href="ganhar.html" style="
-      display: inline-block;
-      padding: 12px 24px;
-      background-color: #444;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 18px;
-      margin-left: 10px;
-      transition: 0.3s;
-    ">
-      🌱 Ganhar RC
-    </a>
+            const ref = doc(db, "users", "mario");
+            const snap = await getDoc(ref);
 
-  </div>
+            if (snap.exists()) {
+                const saldo = snap.data().saldo;
+                document.getElementById("saldo").innerText = saldo + " RC";
+            } else {
+                document.getElementById("saldo").innerText = "Erro";
+            }
+        }
+
+        carregarSaldo();
+    </script>
 
 </body>
 </html>
+
 
 
