@@ -3,6 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>RaizCoin</title>
+  <style>
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+</style>
+
 </head>
 
 <body style="background-color: #1e1e1e; color: white; font-family: Arial;">
@@ -23,10 +31,18 @@
     box-shadow: 0 0 25px rgba(0,0,0,0.5);
   ">
     
-    <p style="font-size: 26px; margin-top: 10px;">
-      Saldo atual:
-      <strong style="font-size: 32px; color: #ffd700;">120 RC</strong>
-    </p>
+   <p style="font-size: 26px; margin-top: 10px;">
+  Saldo atual:
+  <strong style="
+    font-size: 32px;
+    color: #ffea00;
+    text-shadow: 0 0 10px #ffea00;
+    animation: pulse 2s infinite;
+  ">
+    120 RC
+  </strong>
+</p>
+
 
   </div>
 
