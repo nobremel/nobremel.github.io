@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ganhar RC</title>
     <link rel="stylesheet" href="styles.css">
-
-    <!-- Firebase -->
     <script src="firebase.js"></script>
 </head>
 
@@ -18,7 +16,7 @@
         <ul>
             <li><a href="carteira.html">Carteira</a></li>
             <li><a href="historico.html">Histórico</a></li>
-            <li><a href="ganhar2.html">Ganhar</a></li>
+            <li><a href="ganhardois.html">Ganhar</a></li>
         </ul>
     </nav>
 </header>
@@ -45,7 +43,6 @@
 
     async function ganhar(valor) {
         const db = window.db;
-
         const ref = doc(db, "users", "mario");
         const snap = await getDoc(ref);
 
@@ -67,6 +64,3 @@
 </body>
 </html>
 
-
-</body>
-</html>
